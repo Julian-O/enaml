@@ -145,14 +145,10 @@ install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
   
-  # - ECHO "Installed SDKs:"
-  # - ps: "ls \"C:/Program Files/Microsoft SDKs/Windows\""
-  #
-  - ECHO "Installed projects:"
-  - ps: "ls \"C:\\projects\""
+  - ECHO "Build Folder:"
   - ps: $env:APPVEYOR_BUILD_FOLDER
   
-  # - ECHO "Environment Variables"
+  - ECHO "Environment Variables"
   - set
 
   # Prepend desired Python to the PATH of this build (this cannot be
@@ -192,7 +188,9 @@ install:
   # We need a library for Qt.
   # PyQT4 won't pip install, so resort to conda.
   - if %PYQT_VERSION%==4 conda install -q pyqt=4
-  - if %PYQT_VERSION%==5 pip install pyqt5==5.10.1
+  # Pyqt5 5.11.2 doesn't work on Python 3.5 (although it does on other versions)
+  # Avoid using it for now, but optimistically assume that they will fix in next release.
+  - if %PYQT_VERSION%==5 pip install pyqt5!=5.11.2
   - ps: if ($env:QT_API -eq "pyside") {pip install PySide}  
   # Pyside2 won't pip install, so resort to conda.
   - ps: if ($env:QT_API -eq "pyside2") {conda config --add channels conda-forge; conda install -q pyside2}
