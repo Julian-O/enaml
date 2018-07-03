@@ -143,14 +143,14 @@ install:
           throw "There are newer queued builds for this pull request, failing early." }
   
   # Dump some debugging information about the machine.
-  - \@ECHO "Filesystem root:"
+  - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
   
-  - \@ECHO "Build Folder:"
+  - ECHO "Build Folder:"
   - ps: ls $env:APPVEYOR_BUILD_FOLDER
   
-  - \@ECHO "Environment Variables"
-  - \@set
+  - ECHO "Environment Variables"
+  - set
 
   # Prepend desired Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
@@ -177,7 +177,7 @@ install:
   - conda install -q wheel
 
   # Check that we have the expected set-up.
-  - \@"ECHO We specified %PYTHON_VERSION% win%PYTHON_ARCH%"
+  - ECHO "We specified %PYTHON_VERSION% win%PYTHON_ARCH%"
   - "python --version"
   - "python -c \"import struct; print('Architecture is win'+str(struct.calcsize('P') * 8))\""
   - pip --version
