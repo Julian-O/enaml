@@ -13,6 +13,7 @@ environment:
         #    Enaml supports Python 2.7 and also 3.4 onwards.
         #    PyQt4 only available for Python <3.6.
         #    PyQt5 only available for Python >=3.5.
+        #       PyQt5 version 5.11.2 doesn't run on Python 3.5.
         #    PySide1 only available for 2.6 <= Python <=3.4. Wheels only for 32-bit.
         
         # Strategy:
@@ -142,13 +143,13 @@ install:
           throw "There are newer queued builds for this pull request, failing early." }
   
   # Dump some debugging information about the machine.
-  - ECHO "Filesystem root:"
+  - @ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
   
-  - ECHO "Build Folder:"
-  - ps: $env:APPVEYOR_BUILD_FOLDER
+  - @ECHO "Build Folder:"
+  - ps: ls $env:APPVEYOR_BUILD_FOLDER
   
-  - ECHO "Environment Variables"
+  - @ECHO "Environment Variables"
   - set
 
   # Prepend desired Python to the PATH of this build (this cannot be
@@ -198,16 +199,16 @@ install:
   
   # We should be able to install the test dependencies via setup.py, but in the meantime, do it manually:
   - pip install pytest pytest-cov pytest-qt
-  
+
+  # What is now installed?
+  - conda list
+
 build_script:
 
   - cd %APPVEYOR_BUILD_DIR%  
   - pip install .
 
 test_script:
-  # Some debugging output: What is now installed?
-  - pip list
-  - conda list
   
   # Run the project tests
   - cd %APPVEYOR_BUILD_DIR%
