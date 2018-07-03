@@ -7,9 +7,6 @@
 #    Create a new appveyor project, using the GitHub details.
 #    Ideally, configure notifications to post back to GitHub. (Untested)
 
-# Hard
-clone_folder: c:\projects\enaml
-
 environment:
     matrix:
         # Version Restrictions
@@ -210,6 +207,10 @@ build_script:
   - pip install .
 
 test_script:
+  # Some debugging output: What is now installed?
+  - pip list
+  - conda list
+  
   # Run the project tests
   - cd %APPVEYOR_BUILD_DIR%
   - py.test tests -v
