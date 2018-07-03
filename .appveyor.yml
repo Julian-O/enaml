@@ -7,6 +7,9 @@
 #    Create a new appveyor project, using the GitHub details.
 #    Ideally, configure notifications to post back to GitHub. (Untested)
 
+# Hard
+clone_folder: c:\projects\enaml
+
 environment:
     matrix:
         # Version Restrictions
@@ -150,7 +153,7 @@ install:
   #
   - ECHO "Installed projects:"
   - ps: "ls \"C:\\projects\""
-  - ps: "ls \"C:\\projects\\enaml\""
+  - ps: $env:APPVEYOR_BUILD_FOLDER
   
   # - ECHO "Environment Variables"
   - set
