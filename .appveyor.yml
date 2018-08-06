@@ -13,7 +13,6 @@ environment:
         #    Enaml supports Python 2.7 and also 3.4 onwards.
         #    PyQt4 only available for Python <3.6.
         #    PyQt5 only available for Python >=3.5.
-#        #       PyQt5 version 5.11.2 doesn't run on Python 3.5.
         #    PySide1 only available for 2.6 <= Python <=3.4. Wheels only for 32-bit.
         #    Miniconda does not run on Python 3.7 yet.
         
@@ -30,6 +29,7 @@ environment:
         
         # VARIABLES
         #    NAME: just a comment for distinguishing builds in Appveyor.
+        #    MINICONDA: Path of Minicode binaries.
         #    PYQT_VERSION: Determines PyQt versions installation
         #    PY_QT: Determines Pyside version installation (if present), and is used by 
         #           Enaml.
@@ -88,7 +88,7 @@ environment:
         
         - NAME: "32-bit, Latest "
           PYTHON: "C:\\Python37"
-          PYTHON_VERSION: "3.7.8"
+          PYTHON_VERSION: "3.7.0"
           PYTHON_ARCH: "32"
           MINICONDA: C:\Miniconda36
           PYQT_VERSION: "5"
@@ -197,8 +197,6 @@ install:
   # We need a library for Qt.
   # PyQT4 won't pip install, so resort to conda.
   - if %PYQT_VERSION%==4 conda install -q pyqt=4
-  # # Pyqt5 5.11.2 doesn't work on Python 3.5 (although it does on other versions)
-  # Avoid using it for now, but optimistically assume that they will fix in next release.
   - if %PYQT_VERSION%==5 pip install pyqt5
   - ps: if ($env:QT_API -eq "pyside") {pip install PySide}  
   # Pyside2 won't pip install, so resort to conda.
