@@ -13,17 +13,18 @@ environment:
         #    Enaml supports Python 2.7 and also 3.4 onwards.
         #    PyQt4 only available for Python <3.6.
         #    PyQt5 only available for Python >=3.5.
-        #       PyQt5 version 5.11.2 doesn't run on Python 3.5.
+#        #       PyQt5 version 5.11.2 doesn't run on Python 3.5.
         #    PySide1 only available for 2.6 <= Python <=3.4. Wheels only for 32-bit.
+        #    Miniconda does not run on Python 3.7 yet.
         
         # Strategy:
         #    Test each 64-bit Python version, but only the latest known patch.
         #    Test the oldest and the latest 32-bit Python versions release. 
-        #    Test with PyQt4 where available, otherwise PyQT5 in each version.
+        #    Test with PyQt4 where available, otherwise PyQt5 in each version.
         #    Test QScintilla on latest Python version available.
-        #    Test Pyside1 in latest Python version it runs on.
+        #    Test PySide1 in latest Python version it runs on.
         #        - Failure is allowed and won't block PRs.
-        #    Test Pyside2 in latest Python version available
+        #    Test PySide2 in latest Python version available
         #        - Failure is allowed and won't block PRs.
         #    Only test single toolkit installs (e.g. not QT4 and QT5 on same install)
         
@@ -42,7 +43,7 @@ environment:
           PYTHON: "C:\\Python36-x64"
           PYTHON_VERSION: "3.7.0"
           PYTHON_ARCH: "64"
-          MINICONDA: C:\Miniconda37-x64
+          MINICONDA: C:\Miniconda36-x64
           PYQT_VERSION: "5"
 
         - NAME: "Py 3.6"
@@ -89,7 +90,7 @@ environment:
           PYTHON: "C:\\Python37"
           PYTHON_VERSION: "3.7.8"
           PYTHON_ARCH: "32"
-          MINICONDA: C:\Miniconda37
+          MINICONDA: C:\Miniconda36
           PYQT_VERSION: "5"
 
         - NAME: "32-bit, Oldest"
@@ -105,7 +106,7 @@ environment:
           PYTHON: "C:\\Python37-x64"
           PYTHON_VERSION: "3.7.0"
           PYTHON_ARCH: "64"
-          MINICONDA: C:\Miniconda37-x64
+          MINICONDA: C:\Miniconda36-x64
           PYQT_VERSION: "5"
           QSCINTILLA: "Yes"
 
@@ -122,8 +123,8 @@ environment:
           QT_API: "pyside"
 
         - NAME: "PySide2"
-          PYTHON: "C:\\Python36-x64"
-          PYTHON_VERSION: "3.6.3"
+          PYTHON: "C:\\Python37-x64"
+          PYTHON_VERSION: "3.7.0"
           PYTHON_ARCH: "64"
           MINICONDA: C:\Miniconda36-x64
           PYQT_VERSION: "None"
@@ -196,7 +197,7 @@ install:
   # We need a library for Qt.
   # PyQT4 won't pip install, so resort to conda.
   - if %PYQT_VERSION%==4 conda install -q pyqt=4
-  # Pyqt5 5.11.2 doesn't work on Python 3.5 (although it does on other versions)
+  # # Pyqt5 5.11.2 doesn't work on Python 3.5 (although it does on other versions)
   # Avoid using it for now, but optimistically assume that they will fix in next release.
   - if %PYQT_VERSION%==5 pip install pyqt5
   - ps: if ($env:QT_API -eq "pyside") {pip install PySide}  
